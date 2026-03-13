@@ -1,0 +1,17 @@
+# ======================================================
+# robots.txt — Conecta Horizontal
+# https://conectahorizontal.com/
+# ======================================================
+
+# Permitir a todos los bots rastrear el sitio
+User-agent: *
+Allow: /
+
+# Bloquear rutas que no deben indexarse
+Disallow: /node_modules/
+Disallow: /tests/
+Disallow: /.git/
+Disallow: /.github/
+
+# Ruta al mapa del sitio
+Sitemap: https://conectahorizontal.com/sitemap.xml
