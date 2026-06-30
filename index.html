@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <!-- ═══ SEO PRIMARIO ═══ -->
-  <title>Conecta Horizontal | Software de Votación Electrónica para Propiedad Horizontal en Colombia</title>
-  <meta name="description" content="Software de votación electrónica presencial, virtual y mixta para asambleas de propiedad horizontal en Colombia. Control de quórum, coeficientes ponderados y autenticación por WhatsApp. Cumplimos la Ley 675 de 2001. Empresa 100% cartagenera.">
+  <title>Conecta Horizontal | Votación Electrónica para Asambleas</title>
+  <meta name="description" content="Software de votación electrónica para asambleas de propiedad horizontal en Colombia. Cumple la Ley 675. Quórum en tiempo real y soporte en Cartagena.">
   <meta name="keywords" content="votación electrónica propiedad horizontal, software asambleas copropietarios, quórum electrónico, ley 675 de 2001, asambleas virtuales Colombia, votación conjuntos residenciales, votación centros comerciales, conecta horizontal, Cartagena">
   <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
   <meta name="author" content="Conecta Horizontal">
@@ -51,6 +51,19 @@
   <link rel="dns-prefetch" href="https://cdn.tailwindcss.com">
 
   <!-- ═══ SCHEMA.ORG JSON-LD (Datos Estructurados) ═══ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Conecta Horizontal",
+    "url": "https://conectahorizontal.com/",
+    "logo": "https://conectahorizontal.com/Logo.png",
+    "sameAs": [
+      "https://wa.me/573044700752"
+    ]
+  }
+  </script>
+
   <script type="application/ld+json">
   [
     {
@@ -210,7 +223,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-20">
         <div class="flex items-center gap-2">
-          <img src="Logo.png" alt="Conecta Horizontal" class="h-10 w-auto">
+          <img src="Logo.png" alt="Conecta Horizontal" width="40" height="40" class="h-10 w-auto">
           <span class="font-montserrat font-black text-sm sm:text-xl text-titleColor tracking-tighter">
             CONECTA <span class="text-primary">HORIZONTAL</span>
           </span>
@@ -221,7 +234,7 @@
           <a href="#proceso" class="hover:text-primary transition-colors">¿Cómo funciona?</a>
           <a href="#trabaja-con-nosotros" class="hover:text-primary transition-colors">Trabaja con nosotros</a>
           <a href="https://wa.me/573044700752"
-            class="bg-primary text-white px-6 py-2 rounded-full hover:bg-primaryDark transition-all shadow-lg shadow-primary/30">Cotizar</a>
+            class="btn-main bg-primary text-white px-6 py-2 rounded-full hover:bg-primaryDark transition-all shadow-lg shadow-primary/30">Cotizar</a>
         </div>
       </div>
     </div>
@@ -242,7 +255,7 @@
           </p>
           <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
             <a href="https://wa.me/573044700752"
-              class="px-8 py-4 bg-primary text-white font-bold rounded-xl hover:scale-105 transition-transform text-center shadow-xl shadow-primary/20">Iniciar
+              class="btn-main px-8 py-4 bg-primary text-white font-bold rounded-xl hover:scale-105 transition-transform text-center shadow-xl shadow-primary/20">Iniciar
               una Votación</a>
             <a href="#productos"
               class="px-8 py-4 bg-slate-100 text-slate-700 font-bold rounded-xl hover:bg-slate-200 transition-colors text-center">Ver
@@ -421,6 +434,29 @@
     </div>
   </section>
 
+  <section id="garantia" class="py-16 bg-gradient-to-br from-[#0f3d2e] to-[#082119] text-white">
+    <div class="max-w-5xl mx-auto px-4 text-center">
+      <h2 class="text-3xl font-bold font-montserrat mb-4">Nuestra Garantía de Cumplimiento</h2>
+      <p class="text-slate-300 max-w-2xl mx-auto mb-8">
+        Ofrecemos un sistema 100% auditable y adaptado a la legislación colombiana. Si el quórum o la votación presentan fallos técnicos que alteren la legalidad del acta, te brindamos soporte legal y tecnológico inmediato sin costo adicional.
+      </p>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+        <div class="bg-white/10 p-6 rounded-2xl">
+          <span class="text-primary font-bold text-2xl block mb-2">100% Legal</span>
+          <p class="text-xs text-slate-300">Cumplimiento estricto de la Ley 675 de 2001 para asambleas presenciales, virtuales y mixtas.</p>
+        </div>
+        <div class="bg-white/10 p-6 rounded-2xl">
+          <span class="text-primary font-bold text-2xl block mb-2">Cero Errores</span>
+          <p class="text-xs text-slate-300">Monitoreo de quórum y coeficientes en tiempo real validados mediante logs de auditoría.</p>
+        </div>
+        <div class="bg-white/10 p-6 rounded-2xl">
+          <span class="text-primary font-bold text-2xl block mb-2">Soporte 24/7</span>
+          <p class="text-xs text-slate-300">Soporte técnico y legal especializado antes, durante y después de la asamblea.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="proceso" class="py-20 bg-brandGray bg-grid-pattern">
     <div class="max-w-5xl mx-auto px-4">
       <div class="text-center mb-16">
@@ -583,7 +619,7 @@
             <input type="checkbox" name="terms" id="terms" required
               class="mt-1 h-4 w-4 rounded border-slate-300 text-primary focus:ring-primary">
             <label for="terms" class="text-xs text-slate-500 leading-normal">
-              Acepto la <a href="proteccion-de-datos.html" target="_blank" class="text-primary font-semibold underline hover:text-primaryDark">Política de Tratamiento de Datos Personales</a>. Autorizo a Conecta Horizontal a almacenar y procesar mis datos para este proceso de selección.
+              Acepto la <a href="proteccion-de-datos.html" target="_blank" rel="noopener noreferrer" class="text-primary font-semibold underline hover:text-primaryDark">Política de Tratamiento de Datos Personales</a>. Autorizo a Conecta Horizontal a almacenar y procesar mis datos para este proceso de selección.
             </label>
           </div>
 
@@ -763,7 +799,7 @@
   }
   </script>
 
-  <footer class="bg-slate-900 text-slate-400 py-16">
+  <footer id="contacto" class="bg-slate-900 text-slate-400 py-16">
     <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-3 gap-12 border-b border-slate-800 pb-12">
       <div>
         <span class="text-white font-montserrat font-black text-xl">CONECTA <span
