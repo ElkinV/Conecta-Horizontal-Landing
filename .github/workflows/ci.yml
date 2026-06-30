@@ -4,11 +4,13 @@ on:
   push:
     branches:
       - main
+      - gybramdev
       - 'feature/**'
       - 'fix/**'
   pull_request:
     branches:
       - main
+      - gybramdev
 
 jobs:
   validar-landing:
