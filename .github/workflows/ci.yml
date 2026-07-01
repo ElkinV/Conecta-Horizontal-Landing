@@ -1,14 +1,16 @@
-name: 🚦 CI — Validación de Landing
+name: 🚦 CI/CD — Validación y Despliegue de Landing
 
 on:
   push:
     branches:
       - main
+      - gybramdev
       - 'feature/**'
       - 'fix/**'
   pull_request:
     branches:
       - main
+      - gybramdev
 
 jobs:
   validar-landing:
@@ -22,7 +24,7 @@ jobs:
       - name: 🟢 Configurar Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
           cache: 'npm'
 
       - name: 📦 Instalar dependencias
@@ -38,3 +40,25 @@ jobs:
       - name: ❌ Falló la validación
         if: failure()
         run: echo "La landing tiene errores. Revisar el reporte de tests."
+
+  desplegar-landing:
+    name: 🚀 Desplegar a Oracle Cloud
+    needs: validar-landing
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Checkout del repositorio
+        uses: actions/checkout@v4
+
+      - name: 📁 Copiar archivos al servidor web mediante SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          source: "index.html,proteccion-de-datos.html,terminos-del-servicio.html,robots.txt,sitemap.xml,Logo.png"
+          target: ${{ secrets.REMOTE_TARGET }}
+          overwrite: true
+
