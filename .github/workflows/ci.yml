@@ -74,7 +74,7 @@ jobs:
       - name: Rsync al servidor
         run: |
           rsync -azc -e "ssh -i ~/.ssh/id" \
-            dist/ ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:${{ secrets.REMOTE_TARGET }}/
+            dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.REMOTE_TARGET }}/
 
       - name: Smoke test
         run: |
