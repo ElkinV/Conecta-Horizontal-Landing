@@ -193,8 +193,8 @@ describe('📄 Secciones clave del contenido', () => {
     expect($('#productos').length).toBe(1);
   });
 
-  test('Existe sección de Garantía (#garantia)', () => {
-    expect($('#garantia').length).toBe(1);
+  test('La sección de Garantía (#garantia) fue retirada y no debe volver', () => {
+    expect($('#garantia').length).toBe(0);
   });
 
   test('Existe footer con sección de contacto (#contacto)', () => {
@@ -260,12 +260,19 @@ describe('🗳️  Sección Tipos de Asamblea', () => {
     }
   });
 
-  test('Virtual y Mixta destacan Zoom, quórum automático, correos y soporte', () => {
+  test('Virtual y Mixta destacan Zoom, quórum automático, correo y soporte', () => {
     const texto = $('#tipos-asamblea').text();
     expect(texto).toContain('Zoom');
     expect(texto.toLowerCase()).toContain('quórum automático');
-    expect(texto.toLowerCase()).toContain('correos');
+    expect(texto.toLowerCase()).toContain('correo');
     expect(texto.toLowerCase()).toContain('soporte');
+  });
+
+  test('Incluye los logos de Zoom y WhatsApp (svg accesibles)', () => {
+    expect($('#tipos-asamblea svg[aria-label="Zoom"]').length).toBeGreaterThan(0);
+    expect($('#tipos-asamblea svg[aria-label="WhatsApp"]').length).toBeGreaterThan(0);
+    // El card de productos "Autenticación por WhatsApp" usa el logo real
+    expect($('#productos svg[aria-label="WhatsApp"]').length).toBeGreaterThan(0);
   });
 
   test('La sección "Trabaja con nosotros" ya no existe', () => {
