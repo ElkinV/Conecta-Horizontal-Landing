@@ -193,8 +193,8 @@ describe('📄 Secciones clave del contenido', () => {
     expect($('#productos').length).toBe(1);
   });
 
-  test('Existe sección de Garantía (#garantia)', () => {
-    expect($('#garantia').length).toBe(1);
+  test('La sección de Garantía (#garantia) fue retirada y no debe volver', () => {
+    expect($('#garantia').length).toBe(0);
   });
 
   test('Existe footer con sección de contacto (#contacto)', () => {
@@ -241,5 +241,43 @@ describe('🧩 Schema.org JSON-LD', () => {
     const data = JSON.parse(ldScript);
     expect(data.name).toBeDefined();
     expect(data.name.trim().length).toBeGreaterThan(0);
+  });
+});
+
+// ─────────────────────────────────────────────
+// 9. TIPOS DE ASAMBLEA (reemplaza a "Trabaja con nosotros")
+// ─────────────────────────────────────────────
+describe('🗳️  Sección Tipos de Asamblea', () => {
+  test('Existe la sección #tipos-asamblea y el nav apunta a ella', () => {
+    expect($('#tipos-asamblea').length).toBe(1);
+    expect($('a[href="#tipos-asamblea"]').length).toBeGreaterThan(0);
+  });
+
+  test('Presenta las tres modalidades: Presencial, Virtual y Mixta', () => {
+    const texto = $('#tipos-asamblea').text();
+    for (const tipo of ['Presencial', 'Virtual', 'Mixta']) {
+      expect(texto).toContain(tipo);
+    }
+  });
+
+  test('Virtual y Mixta destacan Zoom, quórum automático, correo y soporte', () => {
+    const texto = $('#tipos-asamblea').text();
+    expect(texto).toContain('Zoom');
+    expect(texto.toLowerCase()).toContain('quórum automático');
+    expect(texto.toLowerCase()).toContain('correo');
+    expect(texto.toLowerCase()).toContain('soporte');
+  });
+
+  test('Incluye los logos de Zoom y WhatsApp (svg accesibles)', () => {
+    expect($('#tipos-asamblea svg[aria-label="Zoom"]').length).toBeGreaterThan(0);
+    expect($('#tipos-asamblea svg[aria-label="WhatsApp"]').length).toBeGreaterThan(0);
+    // El card de productos "Autenticación por WhatsApp" usa el logo real
+    expect($('#productos svg[aria-label="WhatsApp"]').length).toBeGreaterThan(0);
+  });
+
+  test('La sección "Trabaja con nosotros" ya no existe', () => {
+    expect($('#trabaja-con-nosotros').length).toBe(0);
+    expect($('a[href="#trabaja-con-nosotros"]').length).toBe(0);
+    expect($('#employment-form').length).toBe(0);
   });
 });

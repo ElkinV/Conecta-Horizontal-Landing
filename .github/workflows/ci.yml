@@ -72,9 +72,15 @@ jobs:
       # repo (p. ej. .well-known de los certificados). Si se confirma que solo
       # vive la landing ahi, agregar --delete --exclude='.well-known'.
       - name: Rsync al servidor
+        env:
+          SSH_USER: ${{ secrets.SSH_USER }}
+          REMOTE_TARGET: ${{ secrets.REMOTE_TARGET }}
         run: |
+          # Guard: con secrets vacios rsync intentaria escribir en / del servidor.
+          [ -n "$SSH_USER" ] || { echo "::error::Falta el secret SSH_USER"; exit 1; }
+          [ -n "$REMOTE_TARGET" ] || { echo "::error::Falta el secret REMOTE_TARGET"; exit 1; }
           rsync -azc -e "ssh -i ~/.ssh/id" \
-            dist/ ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:${{ secrets.REMOTE_TARGET }}/
+            dist/ "$SSH_USER"@${{ secrets.SSH_HOST }}:"$REMOTE_TARGET"/
 
       - name: Smoke test
         run: |
