@@ -1,4 +1,4 @@
-name: 🚦 CI/CD — Validación y Despliegue de Landing
+name: CI/CD
 
 on:
   push:
@@ -12,53 +12,76 @@ on:
       - main
       - gybramdev
 
+concurrency:
+  group: deploy-landing
+  cancel-in-progress: false
+
 jobs:
   validar-landing:
+    # OJO: este nombre es el status check requerido en el ruleset de main.
+    # Si se renombra aqui, hay que renombrarlo tambien en el ruleset.
     name: Validar HTML y SEO
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout del repositorio
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: 🟢 Configurar Node.js
+      - name: Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '24'
           cache: 'npm'
 
-      - name: 📦 Instalar dependencias
+      - name: Dependencias
         run: npm ci
 
-      - name: 🧪 Ejecutar tests de la landing
+      - name: Tests
         run: npm test
 
-      - name: ✅ Tests completados
-        if: success()
-        run: echo "La landing pasó todas las validaciones correctamente."
-
-      - name: ❌ Falló la validación
-        if: failure()
-        run: echo "La landing tiene errores. Revisar el reporte de tests."
-
   desplegar-landing:
-    name: 🚀 Desplegar a Oracle Cloud
+    name: Desplegar
     needs: validar-landing
     if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Checkout del repositorio
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: 📁 Copiar archivos al servidor web mediante SCP
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_KEY }}
-          port: 22
-          source: "index.html,proteccion-de-datos.html,terminos-del-servicio.html,robots.txt,sitemap.xml,Logo.png"
-          target: ${{ secrets.REMOTE_TARGET }}
-          overwrite: true
+      # Los globs (*.html, *.png) hacen que cualquier pagina o imagen NUEVA se
+      # despliegue sola, sin tener que acordarse de agregarla a una lista.
+      - name: Armar artefacto
+        run: |
+          mkdir -p dist
+          cp -v *.html *.png robots.txt sitemap.xml dist/
 
+      # Mismo secret base64 que backend y frontend (SSH_PRIVATE_KEY_B64): un
+      # solo formato de llave en los tres repos, y sin corrupcion por saltos
+      # de linea al pegarlo.
+      - name: Preparar SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.SSH_PRIVATE_KEY_B64 }}" | base64 -d > ~/.ssh/id
+          chmod 600 ~/.ssh/id
+          ssh-keygen -y -f ~/.ssh/id > /dev/null \
+            || { echo "::error::SSH_PRIVATE_KEY_B64 no es una clave privada valida"; exit 1; }
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+
+      # Sin --delete a proposito: el web root puede contener cosas ajenas al
+      # repo (p. ej. .well-known de los certificados). Si se confirma que solo
+      # vive la landing ahi, agregar --delete --exclude='.well-known'.
+      - name: Rsync al servidor
+        run: |
+          rsync -azc -e "ssh -i ~/.ssh/id" \
+            dist/ ${{ secrets.SSH_USERNAME }}@${{ secrets.SSH_HOST }}:${{ secrets.REMOTE_TARGET }}/
+
+      - name: Smoke test
+        run: |
+          for i in $(seq 1 5); do
+            if curl -sfo /dev/null --max-time 10 https://conectahorizontal.com/; then
+              echo "Landing respondiendo OK"; exit 0
+            fi
+            echo "Intento $i/5: aun no responde, reintentando en 10s..."; sleep 10
+          done
+          echo "::error::La landing no respondio tras el deploy"; exit 1

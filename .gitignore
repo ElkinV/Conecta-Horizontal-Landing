@@ -1,0 +1,15 @@
+# dependencias (el CI hace npm ci; nunca commitear)
+node_modules/
+
+# artefactos de build/publicación
+dist/
+coverage/
+
+# sistema / editor
+.DS_Store
+Thumbs.db
+*.log
+
+# entorno
+.env
+.env.*
