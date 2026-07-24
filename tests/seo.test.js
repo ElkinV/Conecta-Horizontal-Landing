@@ -275,6 +275,16 @@ describe('🗳️  Sección Tipos de Asamblea', () => {
     expect($('#productos svg[aria-label="WhatsApp"]').length).toBeGreaterThan(0);
   });
 
+  test('El hero muestra el mockup real de la vista de votación (sin imágenes de stock)', () => {
+    expect($('#hero-mockup').length).toBe(1);
+    const texto = $('#hero-mockup').text();
+    expect(texto).toContain('Registrar Voto');
+    expect(texto).toContain('Quórum');
+    expect(texto).toContain('Resultados en vivo');
+    // Sin imágenes de CDNs de stock (flaticon) en toda la página
+    expect($('img[src*="flaticon"]').length).toBe(0);
+  });
+
   test('Productos conserva los complementos: audiovisuales y acta (panel integral)', () => {
     const texto = $('#productos').text();
     for (const clave of ['proyectores', 'Telones', 'Sonido profesional', 'transcripción', 'acta']) {
