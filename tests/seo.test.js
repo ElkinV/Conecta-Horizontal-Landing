@@ -275,6 +275,13 @@ describe('🗳️  Sección Tipos de Asamblea', () => {
     expect($('#productos svg[aria-label="WhatsApp"]').length).toBeGreaterThan(0);
   });
 
+  test('Productos conserva los complementos: audiovisuales y acta (panel integral)', () => {
+    const texto = $('#productos').text();
+    for (const clave of ['proyectores', 'Telones', 'Sonido profesional', 'transcripción', 'acta']) {
+      expect(texto).toContain(clave);
+    }
+  });
+
   test('La sección "Trabaja con nosotros" ya no existe', () => {
     expect($('#trabaja-con-nosotros').length).toBe(0);
     expect($('a[href="#trabaja-con-nosotros"]').length).toBe(0);
