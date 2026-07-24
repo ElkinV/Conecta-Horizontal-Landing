@@ -243,3 +243,34 @@ describe('🧩 Schema.org JSON-LD', () => {
     expect(data.name.trim().length).toBeGreaterThan(0);
   });
 });
+
+// ─────────────────────────────────────────────
+// 9. TIPOS DE ASAMBLEA (reemplaza a "Trabaja con nosotros")
+// ─────────────────────────────────────────────
+describe('🗳️  Sección Tipos de Asamblea', () => {
+  test('Existe la sección #tipos-asamblea y el nav apunta a ella', () => {
+    expect($('#tipos-asamblea').length).toBe(1);
+    expect($('a[href="#tipos-asamblea"]').length).toBeGreaterThan(0);
+  });
+
+  test('Presenta las tres modalidades: Presencial, Virtual y Mixta', () => {
+    const texto = $('#tipos-asamblea').text();
+    for (const tipo of ['Presencial', 'Virtual', 'Mixta']) {
+      expect(texto).toContain(tipo);
+    }
+  });
+
+  test('Virtual y Mixta destacan Zoom, quórum automático, correos y soporte', () => {
+    const texto = $('#tipos-asamblea').text();
+    expect(texto).toContain('Zoom');
+    expect(texto.toLowerCase()).toContain('quórum automático');
+    expect(texto.toLowerCase()).toContain('correos');
+    expect(texto.toLowerCase()).toContain('soporte');
+  });
+
+  test('La sección "Trabaja con nosotros" ya no existe', () => {
+    expect($('#trabaja-con-nosotros').length).toBe(0);
+    expect($('a[href="#trabaja-con-nosotros"]').length).toBe(0);
+    expect($('#employment-form').length).toBe(0);
+  });
+});
